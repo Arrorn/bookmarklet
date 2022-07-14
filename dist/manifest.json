@@ -2,12 +2,9 @@
     "modals":[
         {
             "name": "test",
-            "css": [
-                "css/modal.css"
-            ],
-            "html": [
-                "html/modal.html"
-            ]
+            "css": "css/modal.css",
+            "html": "html/modal.html"
         }
-    ]
+    ],
+    "entry":"test"
 }

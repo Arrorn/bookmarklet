@@ -1,0 +1,36 @@
+{
+    "name": "@arrorn/bookmarklet",
+    "version": "0.0.1",
+    "description": "",
+    "homepage": "https://github.com/Arrorn/bookmarklet",
+    "bugs": {
+        "url": "https://github.com/Arrorn/bookmarklet/issues"
+    },
+    "license": "Apache-2.0",
+    "contributors": [
+        {
+            "name": "Devon R.K. McAvoy",
+            "email": "arrorn@arrorn.com",
+            "url": "https://github.com/Arrorn"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Arrorn/bookmarklet.git"
+    },
+    "scripts": {
+        "updateBrowsers": "npx browserslist --update-db",
+        "createBookmarklet": "@Powershell -ExecutionPolicy Unrestricted -Command \".\\buildbookmarklet.ps1 .\\dist\\entry.min.js .\\dist\\bookmarklet.min.js\"",
+        "build": "npx rimraf ./build && npx rimraf ./dist/entry.js && npx rimraf ./dist/entry.min.js && npx rimraf ./dist/bookmarklet.min.js && npx babel ./src -d ./build && npx browserify ./build/entry.js --outfile ./dist/entry.js && npx uglifyjs ./dist/entry.js -o ./dist/entry.min.js -m -c collapse_vars=false,hoist_funs=true,keep_fargs=true,pure_getters=false,reduce_vars=false -O inline_script=false,quote_style=best && npm run createBookmarklet"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.17.10",
+        "@babel/core": "^7.18.5",
+        "@babel/eslint-parser": "^7.18.2",
+        "@babel/preset-env": "^7.18.2",
+        "browserify": "^17.0.0",
+        "rimraf": "^3.0.2",
+        "uglify-js": "^3.16.2"
+    },
+    "type": "module"
+}

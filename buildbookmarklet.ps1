@@ -1,0 +1,1 @@
+Write-Output "javascript:(function(){$( Get-Content $args[0] )}())" >> $args[1]
