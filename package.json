@@ -20,8 +20,12 @@
     },
     "scripts": {
         "updateBrowsers": "npx browserslist --update-db",
-        "createBookmarklet": "@Powershell -ExecutionPolicy Unrestricted -Command \".\\buildbookmarklet.ps1 .\\dist\\entry.min.js .\\dist\\bookmarklet.min.js\"",
-        "build": "npx rimraf ./build && npx rimraf ./dist/entry.js && npx rimraf ./dist/entry.min.js && npx rimraf ./dist/bookmarklet.min.js && npx babel ./src -d ./build && npx browserify ./build/entry.js --outfile ./dist/entry.js && npx uglifyjs ./dist/entry.js -o ./dist/entry.min.js -m -c collapse_vars=false,hoist_funs=true,keep_fargs=true,pure_getters=false,reduce_vars=false -O inline_script=false,quote_style=best && npm run createBookmarklet"
+        "precreateBookmarklet": "npx rimraf ./dist/bookmarklet.min.js",
+        "createBookmarklet": "run-script-os",
+        "createBookmarklet:win32": "@Powershell -ExecutionPolicy Unrestricted -Command \".\\buildbookmarklet.ps1 .\\build\\application.min.js .\\dist\\bookmarklet.min.js\"",
+        "createBookmarklet:linux": "./buildbookmarklet.sh ./build/application.min.js ./dist/bookmarklet.min.js",
+        "prebuild": "npx rimraf ./build",
+        "build": " npx babel ./src -d ./build && npx browserify ./build/entry.js --outfile ./build/application.js && npx uglifyjs -o ./build/application.min.js -m -c collapse_vars=false,hoist_funs=true,keep_fargs=true,pure_getters=false,reduce_vars=false -O inline_script=false,quote_style=best -- ./defines.js ./build/application.js && npm run createBookmarklet"
     },
     "devDependencies": {
         "@babel/cli": "^7.17.10",
@@ -30,6 +34,7 @@
         "@babel/preset-env": "^7.18.2",
         "browserify": "^17.0.0",
         "rimraf": "^3.0.2",
+        "run-script-os": "^1.1.6",
         "uglify-js": "^3.16.2"
     },
     "type": "module"
